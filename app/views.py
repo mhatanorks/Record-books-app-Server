@@ -9,6 +9,14 @@ from rest_framework.response import Response
 from accounts.models import CustomUser
 from django.shortcuts import get_object_or_404
 
+from django.views.generic import View
+from django.shortcuts import render
+
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "app/index.html")
+
+
 
 class BookCreateView(generics.CreateAPIView):
     # queryset = Book.objects.all()
