@@ -78,11 +78,12 @@ MIDDLEWARE = [
 ]
 
 # localhost:3000からのアクセスを許可
-CORS_ORIGIN_WHITELIST = [
-    "https://record-books-app.vercel.app",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "https://record-books-app.vercel.app",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+CORS_ORIGIN_ALLOW_ALL = True
 
 # クレデンシャル付きのリクエストを許可する
 CORS_ALLOW_CREDENTIALS = True
