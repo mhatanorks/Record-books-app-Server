@@ -33,8 +33,26 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = 'RENDER' not in os.environ
+
+DEBUG = True
+
+# ログ設定
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # 既存のロガーを無効にしない
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Django のログレベルを DEBUG に設定
+        },
+    },
+}
+# DEBUG = 'RENDER' not in os.environ
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 ALLOWED_HOSTS = ["*"]
 
@@ -180,7 +198,6 @@ default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 DATABASES = {
     "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
-
 
 
 # Password validation
