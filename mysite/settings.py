@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,6 +72,14 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3000"
 ]
 
+# クレデンシャル付きのリクエストを許可する
+CORS_ALLOW_CREDENTIALS = True
+
+# クッキーを含むリクエストがサポートされるように、以下を設定
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'my-custom-header',
+]
+
 
 # allauth Googleプロバイダー設定
 # https://django-allauth.readthedocs.io/en/latest/providers.html#google
@@ -95,6 +106,7 @@ SITE_ID = 1
 
 # https://dj-rest-auth.readthedocs.io/en/latest/configuration.html
 REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'my-app-auth'
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserSerializer'
 }

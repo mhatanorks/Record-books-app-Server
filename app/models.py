@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import CustomUser  # CustomUserモデルをインポート
+from accounts.models import CustomUser
 
 
 class Book(models.Model):
@@ -8,15 +8,15 @@ class Book(models.Model):
         ('favorite', 'Favorite'),
         ('delete', 'Delete'),
     ]
-    
-    id = models.AutoField(primary_key=True) 
+
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
-    authors = models.JSONField()  # 文字列のリストを保存するためにJSONFieldを使用
-    thumbnail = models.URLField(max_length=300, blank=True)  # URLは空でもよい場合
-    createdAt = models.DateTimeField(auto_now_add=True)  # レコードが作成された時に自動的に現在の日時を設定
-    memo = models.TextField(blank=True)  # メモは空でもよい場合
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)  # 状態は3つの選択肢から選ぶ
-    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # CustomUserモデルへの外部キー
+    authors = models.JSONField()
+    thumbnail = models.URLField(max_length=300, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    memo = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

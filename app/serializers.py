@@ -10,15 +10,14 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['id','title', 'authors', 'thumbnail',
+        fields = ['id', 'title', 'authors', 'thumbnail',
                   'memo', 'status', 'userId', 'email']
         extra_kwargs = {
-            'userId': {'read_only': True}  # userIdは読み取り専用にする
+            'userId': {'read_only': True}
         }
 
     def create(self, validated_data):
         user_email = validated_data.pop('email')
-        # user = CustomUser.objects.get(email=user_email)  # ユーザーを取得
         user = get_object_or_404(CustomUser, email=user_email)  # 例外処理を追加
         status = validated_data.pop(
             'status', 'record')  # statusを取り出し、デフォルト値を設定
@@ -34,3 +33,14 @@ class BookReadSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['id', 'title', 'authors',
                   'thumbnail', 'memo', 'status', 'createdAt']
+
+
+class BookStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['id', 'status']
+
+    def update(self, instance, validated_data):
+        instance.status = validated_data.get('status', instance.status)
+        instance.save()
+        return instance
